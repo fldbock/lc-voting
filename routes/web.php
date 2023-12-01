@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,7 @@ Route::get('/', function(){
 });
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::post('/logout', function(){
-        return '';
-    })->name('logout');
+    Route::post('logout', LogoutController::class)->name('logout');
 });
 
 
