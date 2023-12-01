@@ -13,6 +13,6 @@ class LogoutController extends Controller
     {
         auth()->logout();
 
-        return redirect('/')->with('succes', 'Goodbye!');
+        return redirect('/');
     }
 }
