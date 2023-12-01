@@ -17,9 +17,11 @@ Route::get('/', function(){
     return view('index');
 });
 
-Route::post('/logout', function(){
-    return '';
-})->name('logout');
+Route::group(['middleware' => ['auth']], function(){
+    Route::post('/logout', function(){
+        return '';
+    })->name('logout');
+});
 
 
 require __DIR__.'/auth.php';
