@@ -16,7 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
-    <body class="font-sans text-gray-900 text-sm px-10">
+    <body class="font-sans bg-blue-500 text-gray-900 text-sm px-10">
         <header class="flex items-center justify-between px-8 py-4">            
             <a href="#"><img src="{{ asset('img/logo-dark.svg') }}" alt=""></a>
             <div class="flex items-center">
