@@ -18,7 +18,7 @@ export default {
                 black: colors.black,
                 white: colors.white,
                 gray: colors.slate,
-                'gray-background' : colors.black,
+                'gray-background' : '#f7f8fc',
             },
             fontFamily: {
                 sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
