@@ -29,6 +29,13 @@
             </div>
         </header>
 
-        {{  $slot  }}
+        <main class="container mx-auto max-w-custom flex">
+            <div class="w-70 mr-5">
+                Add idea form goes here. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia beatae esse sed officia dolorum dignissimos molestiae eius, neque voluptate quae illum blanditiis recusandae, ea accusamus natus, velit ex nihil. Quidem accusantium explicabo facere nam aliquid perspiciatis a mollitia quia alias, quis esse inventore voluptatum. Placeat, accusamus dignissimos, asperiores hic soluta temporibus itaque provident deserunt nostrum debitis assumenda velit possimus facilis harum vero, minima voluptatem explicabo quo enim dolorum consequuntur. Corporis, placeat. Deleniti incidunt modi perspiciatis consequatur temporibus maiores ipsam repellat! Eaque iusto quod accusamus ratione laudantium consequatur, explicabo quibusdam nesciunt voluptatibus corporis doloremque eveniet, itaque culpa voluptas nisi officia quam.
+            </div>
+            <div class="w-175">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam obcaecati inventore temporibus, enim, laboriosam ipsum eius mollitia illo aliquid sunt asperiores soluta cupiditate itaque sequi odio alias in molestias non quae iste maiores eos corrupti autem. Doloribus deleniti ea deserunt omnis dolore obcaecati sequi! Architecto, provident iure facere explicabo nam blanditiis consequuntur earum tempora molestiae culpa velit rem, accusantium voluptatum voluptate qui sunt officia accusamus eum magnam illo? Officiis, praesentium voluptas est vero illo eos quis eius explicabo, possimus cumque vitae suscipit quia quaerat harum laborum nihil, dignissimos earum numquam aliquid nobis voluptatem dolor? Eaque nobis adipisci dolore quidem, dolorum quibusdam voluptatibus modi laborum totam facilis voluptas ab quo voluptate sequi, vero corrupti fuga officiis? Laudantium excepturi magnam fugiat blanditiis tenetur sunt quos magni est corrupti quae aspernatur, voluptatem perspiciatis itaque perferendis optio natus. Ut quia quas ipsa deserunt. Vitae, quod ratione quasi quae quam soluta cumque? Fugit pariatur alias neque nemo rem maxime modi minus itaque dolorem amet, nam vitae saepe vel. Consectetur, id atque? A quisquam laborum, quidem doloribus accusantium autem iste, incidunt magnam tempore veniam illum optio voluptas ratione aliquam dolores nam eveniet porro officia amet! Cum minus voluptatibus repellat explicabo tempore quidem atque sequi voluptate corrupti.
+            </div>
+        </main>
     </body>
 </html>

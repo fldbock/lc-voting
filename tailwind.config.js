@@ -20,6 +20,13 @@ export default {
                 gray: colors.slate,
                 'gray-background' : '#f7f8fc',
             },
+            maxWidth: {
+                'custom': '62.5rem',
+            },
+            spacing: {
+                70: '17.5rem',
+                175: '43.75rem',
+            },
             fontFamily: {
                 sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
             },
