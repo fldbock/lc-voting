@@ -29,9 +29,16 @@ export default {
             maxWidth: {
                 'custom': '62.5rem',
             },
+            boxShadow: {
+                card: '4px 4px 15px 0 rgba(36,37,38,0.08);',
+                dialog: '3px 4px 15px 0 rgba(36,37,38,0.22);',
+            },
             spacing: {
                 70: '17.5rem',
                 175: '43.75rem',
+            },
+            fontSize: {
+                xxs: ['0.625rem', {lineHeight: '1rem'}],
             },
             fontFamily: {
                 sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
@@ -39,5 +46,7 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+    ],
 };
