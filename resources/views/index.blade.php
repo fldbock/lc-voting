@@ -99,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>         
         </div> <!-- end idea container -->        
 
         <div class="idea-container bg-white rounded-xl flex hover:shadow-md transition duration-150 ease-in cursor-pointer">
@@ -164,7 +164,7 @@
             </div>            
         </div> <!-- end idea container -->     
 
-        <div class="ideas-container space-y-6 my-6 flex flex-col">
+
         <div class="idea-container bg-white rounded-xl flex hover:shadow-md transition duration-150 ease-in cursor-pointer">
             <div class="border-r border-gray-100 px-5 py-8">
                 <div class="text-center">
@@ -227,7 +227,6 @@
             </div>            
         </div> <!-- end idea container -->     
 
-        <div class="ideas-container space-y-6 my-6 flex flex-col">
         <div class="idea-container bg-white rounded-xl flex hover:shadow-md transition duration-150 ease-in cursor-pointer">
             <div class="border-r border-gray-100 px-5 py-8">
                 <div class="text-center">
@@ -290,7 +289,6 @@
             </div>            
         </div> <!-- end idea container -->     
 
-        <div class="ideas-container space-y-6 my-6 flex flex-col">
         <div class="idea-container bg-white rounded-xl flex hover:shadow-md transition duration-150 ease-in cursor-pointer">
             <div class="border-r border-gray-100 px-5 py-8">
                 <div class="text-center">
