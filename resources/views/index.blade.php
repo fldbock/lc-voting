@@ -339,7 +339,7 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <div class="bg-purple text-white text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
+                            <div class="bg-purple text-whiteg text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
                                 Considering
                             </div>
                             <button class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full h-7 transition duration-150 ease-in">
