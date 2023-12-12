@@ -18,6 +18,10 @@ Route::get('/', function(){
     return view('index');
 });
 
+Route::get('/idea', function(){
+    return view('show');
+});
+
 Route::group(['middleware' => ['auth']], function(){
     Route::post('logout', LogoutController::class)->name('logout');
 });
