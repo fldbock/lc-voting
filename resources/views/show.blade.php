@@ -51,11 +51,34 @@
                         <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
                             Open
                         </div>
-                        <button class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                            </svg>
-                        </button>
+                        <button 
+                                x-data="{ isOpen: false }"
+                                @click="isOpen = !isOpen"
+                                class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                                <ul 
+                                    x-show="isOpen"
+                                    x-transition.origin.top.left
+                                    @click.away="isOpen = false"
+                                    @keydown.escape.window="isOpen=false"
+                                    class="z-10 absolute w-44 text-left ml-8 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
+                                    style="display:none;"
+                                >
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Mark as Spam
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Delete post
+                                        </a>
+                                    </li>
+                                </ul>
+                            </button>
                     </div>
                 </div>
             </div>
@@ -63,15 +86,25 @@
     </div> <!-- end idea container -->   
     <div class="buttons-container flex items-center justify-between mt-4">
         <div class="flex items-center space-x-4 ml-6">
-            <div class="relative">
+            <div 
+                x-data="{ isOpen: false }"
+                class="relative"
+            >
                 <button 
+                    @click="isOpen = !isOpen"
                     type="button"
                     class="flex items-center justify-center w-32 h-11 text-white text-sm bg-blue font-semibold rounded-xl hover:bg-blue-hover transition duration-150 ease-in px-6 py-2"
                     >
                     Reply
                 </button>
                 <!-- Reply popup -->
-                <div class="absolute z-10 w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
+                <div 
+                    x-show="isOpen"
+                    x-transition.origin.top.left
+                    @click.away="isOpen = false"
+                    @keydown.escape.window="isOpen=false"
+                    class="absolute z-10 w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2"
+                    >
                     <form action="#" method="post" class="space-y-4 px-4 py-6">
                         <div>
                             <textarea name="post_comment" id="post_comment" cols="30" rows="4" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Go ahead don't be shy. Share your thoughts.."></textarea>
@@ -95,8 +128,12 @@
                     </form>
                 </div>
             </div>
-            <div class="relative">
+            <div 
+                x-data="{ isOpen: false }"
+                class="relative"
+            >
                 <button 
+                    @click="isOpen = !isOpen"
                     type="button"
                     class="flex items-center justify-center w-36 h-11 text-sm bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-2">
                     <span>Set status</span>
@@ -105,7 +142,13 @@
                     </svg>
                 </button>
                 <!-- set status popup -->
-                <div class="absolute z-20 w-76 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
+                <div 
+                    x-show="isOpen"
+                    x-transition.origin.top.left
+                    @click.away="isOpen = false"
+                    @keydown.escape.window="isOpen=false"
+                    class="absolute z-20 w-76 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2"
+                >
                     <form action="#" method="post" class="space-y-4 px-4 py-6">
                         <!-- select statuses to add -->
                         <div class="space-y-2">
@@ -218,10 +261,33 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in">
+                        <button 
+                                x-data="{ isOpen: false }"
+                                @click="isOpen = !isOpen"
+                                class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                                 </svg>
+                                <ul 
+                                    x-show="isOpen"
+                                    x-transition.origin.top.left
+                                    @click.away="isOpen = false"
+                                    @keydown.escape.window="isOpen=false"
+                                    class="z-10 absolute w-44 text-left ml-8 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
+                                    style="display:none;"
+                                >
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Mark as Spam
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Delete Comment
+                                        </a>
+                                    </li>
+                                </ul>
                             </button>
                         </div>
                     </div>
@@ -260,10 +326,33 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in">
+                        <button 
+                                x-data="{ isOpen: false }"
+                                @click="isOpen = !isOpen"
+                                class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                                 </svg>
+                                <ul 
+                                    x-show="isOpen"
+                                    x-transition.origin.top.left
+                                    @click.away="isOpen = false"
+                                    @keydown.escape.window="isOpen=false"
+                                    class="z-10 absolute w-44 text-left ml-8 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
+                                    style="display:none;"
+                                >
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Mark as Spam
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Delete Comment
+                                        </a>
+                                    </li>
+                                </ul>
                             </button>
                         </div>
                     </div>
@@ -299,10 +388,33 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in">
+                        <button 
+                                x-data="{ isOpen: false }"
+                                @click="isOpen = !isOpen"
+                                class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                                 </svg>
+                                <ul 
+                                    x-show="isOpen"
+                                    x-transition.origin.top.left
+                                    @click.away="isOpen = false"
+                                    @keydown.escape.window="isOpen=false"
+                                    class="z-10 absolute w-44 text-left ml-8 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
+                                    style="display:none;"
+                                >
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Mark as Spam
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
+                                            Delete Comment
+                                        </a>
+                                    </li>
+                                </ul>
                             </button>
                         </div>
                     </div>
