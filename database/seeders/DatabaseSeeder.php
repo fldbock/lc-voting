@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use Database\Seeders\IdeaSeeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -12,11 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //Run Idea Seeder, this will also create unique users for these Ideas
+        $this->call(IdeaSeeder::class);
     }
 }

@@ -17,22 +17,22 @@
             <div class="w-full mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold mt-2 md:mt-0">
                     <a href="#">
-                        A random title can go here
+                        {{  $idea->title  }}
                     </a>
                 </h4>
                 <div class="text-gray-600 mt-3 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse eum natus asperiores quos distinctio consequuntur? Ducimus beatae soluta excepturi sequi quidem sint, odio velit tempore illo voluptate consequatur aut minus delectus molestias hic natus vitae? Quisquam, praesentium consequatur. Voluptas nostrum quibusdam exercitationem ea harum enim voluptate dolor sed quis voluptatem, impedit minima? Veritatis ratione natus voluptas nobis eligendi eum et veniam, laborum perferendis. Quia qui, veritatis recusandae dignissimos perferendis nostrum, quam deserunt rerum adipisci nesciunt quas est sit ad tempore, velit nulla nam minus porro harum accusantium. Architecto omnis veniam voluptatum, iusto, dolores ipsum beatae iure quod, amet consequatur eveniet.
+                    {{  $idea->description  }}
                 </div>
                 <div class="flex flex-col md:flex-row md:items-center justify-between mt-6">
                     <div class="flex items-center text-xs font-semibold text-gray-400 md:space-x-2">
                         <div class="hidden md:block font-bold text-gray-900">
-                            John Doe
+                            {{  $idea->user->name  }}
                         </div>
                         <div class="hidden md:block">
                             &bull;
                         </div>
                         <div>
-                            10 hours ago
+                            {{  $idea->created_at->diffForHumans()  }}
                         </div>
                         <div>
                             &bull;

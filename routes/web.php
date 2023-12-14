@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    return view('index');
-});
+Route::get('/', [IdeaController::class, 'index'])->name('idea.index');
 
-Route::get('/idea', function(){
-    return view('show');
-});
+Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea.show');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::post('logout', LogoutController::class)->name('logout');
