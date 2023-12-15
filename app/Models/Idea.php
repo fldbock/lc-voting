@@ -12,6 +12,8 @@ class Idea extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $perPage = 10;
+
     protected $guarded = [];
 
     public function user(){
