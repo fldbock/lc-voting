@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Status;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -26,6 +27,9 @@ class Idea extends Model
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+    public function status(){
+        return $this->belongsTo(Status::class);
     }
 
     public function sluggable(): array

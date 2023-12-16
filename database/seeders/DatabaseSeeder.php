@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         //Run Idea Seeder, this will also create unique users for these Ideas
         $this->call(CategorySeeder::class);
+        $this->call(StatusSeeder::class);
         $this->call(IdeaSeeder::class);
     }
 }

@@ -80,7 +80,7 @@
                                     &bull;
                                 </div>
                                 <div>
-                                {{  $idea->category->name  }}
+                                    {{  $idea->category->name  }}
                                 </div>
                                 <div>
                                     &bull;
@@ -90,8 +90,8 @@
                                 </div>
                             </div>
                             <div class="flex items-center space-x-2 mt-4 md:mt-0 ">
-                                <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
-                                    Open
+                                <div class="{{  Str::kebab($idea->status->name)  }} text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
+                                    {{  $idea->status->name  }}
                                 </div>
                                 <button 
                                     x-data="{ isOpen: false }"

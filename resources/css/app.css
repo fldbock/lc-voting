@@ -59,3 +59,29 @@
     background: theme('colors.purple');
     opacity: 1;
 }
+
+/* Statuses */
+
+.open{
+    @apply bg-gray-200;
+}
+
+.considering{
+    @apply bg-purple;
+    @apply text-white;
+}
+
+.in-progress{
+    @apply bg-yellow;
+    @apply text-white;
+}
+
+.implemented{
+    @apply bg-green;
+    @apply text-white;
+}
+
+.close{
+    @apply bg-red;
+    @apply text-white;
+}
