@@ -90,23 +90,26 @@ class ShowIdeasTests extends TestCase
         $response->assertSee($statusConsidering->name);
     }
 
-    /** @test */
+    /** @test 
+     * Ideas are displayed in descending order by created_at attribute
+    */
     public function test_ideas_pagination_works(){
         //  Arrange       
         $category = Category::factory()->create(['name' => 'Category 1']);
-        $ideaOnFirstPage = Idea::factory()->create([
-            'title' => 'My Idea On The First Page',
+
+        $ideaOnSecondPage = Idea::factory()->create([
+            'title' => 'My Idea On The Second Page',
             'category_id'=> $category->id,
         ]);
 
         // Trick to get the number of ideas displayed per page
         $closure = function(){return $this->perPage;};
-        $perPage = Closure::bind($closure, $ideaOnFirstPage, 'App\Models\Idea')();
+        $perPage = Closure::bind($closure, $ideaOnSecondPage, 'App\Models\Idea')();
         
         Idea::factory($perPage-1)->create(['category_id'=> $category->id]);
 
-        $ideaOnSecondPage = Idea::factory()->create([
-            'title' => 'My Idea On The Second Page',
+        $ideaOnFirstPage = Idea::factory()->create([
+            'title' => 'My Idea On The First Page',
             'category_id'=> $category->id,
         ]);
 
