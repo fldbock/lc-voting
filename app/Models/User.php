@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\Idea;
 
 class User extends Authenticatable
@@ -46,6 +47,10 @@ class User extends Authenticatable
 
     public function ideas(){
         return $this->hasMany(Idea::class);
+    }
+
+    public function votes(){
+        return $this->BelongsToMany(Idea::class, 'votes');
     }
 
     public function getAvatar(){

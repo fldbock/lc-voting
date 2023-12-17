@@ -16,7 +16,8 @@ class IdeaController extends Controller
     {        
         return view('idea.index',[
             'ideas' => Idea::with('user', 'category', 'status')
-            ->orderBy('created_at','desc')
+            ->withCount('votes')
+            ->orderBy('id','desc')
             ->simplePaginate(),
         ]);
     }
@@ -44,6 +45,7 @@ class IdeaController extends Controller
     {
         return view('idea.show', [
             'idea' => $idea,
+            'votesCount' => $idea->votes()->count(),
         ]);
     }
 

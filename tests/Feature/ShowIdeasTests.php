@@ -6,6 +6,7 @@ use App\Models\Idea;
 use App\Models\Category;
 use App\Models\Status;
 
+use Database\Seeders\UserSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
 
@@ -23,6 +24,7 @@ class ShowIdeasTests extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->seed(UserSeeder::class);
         $this->seed(CategorySeeder::class);
         $this->seed(StatusSeeder::class);
     }
