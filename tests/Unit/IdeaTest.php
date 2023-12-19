@@ -44,4 +44,25 @@ class IdeaTest extends TestCase
         $this->assertFalse($idea->isVotedByUser($userB));
         $this->assertFalse($idea->isVotedByUser(null)); //user not logged in
     }
+
+        /** @test */
+        public function test_user_can_vote_on_idea(){
+            $user = User::factory()->create();
+    
+            $category = Category::factory()->create();
+            $status = Status::factory()->create();
+    
+            $idea = Idea::factory()->create([
+                'user_id' => $user->id,
+                'category_id'=> $category->id,
+                'status_id'=> $status->id,
+                'title' => 'My First Idea',
+                'description' => 'Description of my first idea',
+            ]);
+    
+            $idea->toggleVote($user);
+            $this->assertTrue($idea->isVotedByUser($user));
+            $idea->toggleVote($user);
+            $this->assertFalse($idea->isVotedByUser($user));
+        }
 }

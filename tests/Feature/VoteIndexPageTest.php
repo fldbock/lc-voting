@@ -148,4 +148,60 @@ class VoteIndexPageTest extends TestCase
             ->AssertDontSeeHtml('data-test="vote-button-has-voted"')
             ->AssertDontSeeHtml('data-test-votes-count-blue');
     }
+
+    /** @test */
+    public function test_clicking_the_vote_button(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description of my first idea',
+        ]);
+
+        $vote = Vote::factory()->create([
+            'user_id'=> $user->id,
+            'idea_id'=> $idea->id,
+        ]);
+
+        // Guest should get redirected
+        Livewire::test(IdeaIndex::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->call('vote')
+            ->assertRedirect(route('login'));
+
+        // Voted
+        Livewire::actingAs($user)
+            ->test(IdeaIndex::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => $vote->id,
+            ])    
+            ->call('vote')
+            ->assertSet('votesCount', 4)
+            ->assertSet('hasVoted', false);
+
+        $this->assertDatabaseMissing('votes', [
+            'user_id' => $user->id,
+            'idea_id' => $idea->id,
+        ]);
+        // Not voted
+        Livewire::actingAs($userB)
+            ->test(IdeaIndex::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->call('vote')
+            ->assertSet('votesCount', 6)
+            ->assertSet('hasVoted', true);
+        
+        $this->assertDatabaseHas('votes', [
+            'user_id' => $userB->id,
+            'idea_id' => $idea->id,
+        ]);
+    }
 }

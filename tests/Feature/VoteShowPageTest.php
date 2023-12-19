@@ -112,7 +112,6 @@ class VoteShowPageTest extends TestCase
     /** @test */
     public function test_has_voted_shows_correctly_on_idea_index_livewire_component(){
         $user = User::factory()->create();
-        $userB = User::factory()->create();
 
         $idea = Idea::factory()->create([
             'title' => 'My First Idea',
@@ -135,7 +134,7 @@ class VoteShowPageTest extends TestCase
             ->AssertSeeHtml('data-test-votes-count-blue');
         
         // Not voted
-        Livewire::actingAs($userB)
+        Livewire::actingAs($user)
             ->test(IdeaShow::class, [
                 'idea'=> $idea,
                 'votesCount' => 5,
@@ -144,4 +143,60 @@ class VoteShowPageTest extends TestCase
             ->AssertDontSeeHtml('data-test="vote-button-has-voted"')
             ->AssertDontSeeHtml('data-test-votes-count-blue');
     }   
+
+     /** @test */
+     public function test_clicking_the_vote_button(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description of my first idea',
+        ]);
+
+        $vote = Vote::factory()->create([
+            'user_id'=> $user->id,
+            'idea_id'=> $idea->id,
+        ]);
+
+        // Guest should get redirected
+        Livewire::test(IdeaShow::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->call('vote')
+            ->assertRedirect(route('login'));
+
+        // Voted
+        Livewire::actingAs($user)
+            ->test(IdeaShow::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => $vote->id,
+            ])    
+            ->call('vote')
+            ->assertSet('votesCount', 4)
+            ->assertSet('hasVoted', false);
+
+        $this->assertDatabaseMissing('votes', [
+            'user_id' => $user->id,
+            'idea_id' => $idea->id,
+        ]);
+        // Not voted
+        Livewire::actingAs($userB)
+            ->test(IdeaShow::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->call('vote')
+            ->assertSet('votesCount', 6)
+            ->assertSet('hasVoted', true);
+        
+        $this->assertDatabaseHas('votes', [
+            'user_id' => $userB->id,
+            'idea_id' => $idea->id,
+        ]);
+    }
 }

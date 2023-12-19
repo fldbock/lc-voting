@@ -18,12 +18,16 @@ class IdeaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $USER_COUNT = 20;
+    protected $CATEGORY_COUNT = 4;
+    protected $STATUS_COUNT = 5;
     public function definition(): array
     {
+        
         return [
-            'user_id' => $this->faker->numberBetween(1,User::count()),
-            'category_id' => $this->faker->numberBetween(1,Category::count()),
-            'status_id' => $this->faker->numberBetween(1,Status::count()),
+            'user_id' => $this->faker->numberBetween(1,$this->USER_COUNT),
+            'category_id' => $this->faker->numberBetween(1,$this->CATEGORY_COUNT),
+            'status_id' => $this->faker->numberBetween(1,$this->STATUS_COUNT),
             'title' => ucwords($this->faker->words(4, true)),
             'description' => $this->faker->paragraph(5),            
         ];

@@ -52,4 +52,12 @@ class Idea extends Model
 
         return $this->votes()->where('user_id', $user->id)->exists();
     }
+
+    public function toggleVote(User $user){  
+        if (!$this->isVotedByUser($user)){
+            $this->votes()->attach($user);
+            return ;
+        }
+        $this->votes()->detach($user);
+    }
 }
