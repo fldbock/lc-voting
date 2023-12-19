@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 use Livewire\Livewire;
 use App\Livewire\IdeaIndex;
+use App\Livewire\IdeasIndex;
 
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
@@ -42,7 +43,7 @@ class VoteIndexPageTest extends TestCase
     }  
 
         /** @test */
-        public function test_index_page_correctly_receives_votes_count(){
+        public function test_ideas_index_livewire_component_correctly_receives_votes_count(){
             $idea = Idea::factory()->create([
                 'title' => 'My First Idea',
                 'description' => 'Description for my first idea',
@@ -58,7 +59,7 @@ class VoteIndexPageTest extends TestCase
                 'idea_id' => $idea->id,
             ]);
     
-            $this->get(route('idea.index', $idea))
+            Livewire::test(IdeasIndex::class)
                 ->assertViewHas('ideas', function($ideas){
                     return $ideas->first()->votes_count == 2;
                 });
@@ -79,7 +80,7 @@ class VoteIndexPageTest extends TestCase
             ->assertSee('777898');
         }   
     /** @test */
-    public function test_index_page_correctly_receives_has_voted(){
+    public function test_ideas_index_livewire_component_correctly_receives_has_voted(){
         $user = User::factory()->create();
         $userB = User::factory()->create();
 
@@ -94,23 +95,23 @@ class VoteIndexPageTest extends TestCase
         ]);
 
         // Voted
-        $this->actingAs($user)
-            ->get(route('idea.index', $idea))
+        Livewire::actingAs($user)
+            ->test(IdeasIndex::class)
             ->assertViewHas('ideas', function($ideas){
                 return $ideas->first()->voted_by_user == true;
             });
         // Not Voted
-        $this->actingAs($userB)
-            ->get(route('idea.index', $idea))
+        Livewire::actingAs($userB)
+            ->test(IdeasIndex::class)
             ->assertViewHas('ideas', function($ideas){
                 return $ideas->first()->voted_by_user == false;
             });
 
         // Guest
-        $this->get(route('idea.index', $idea))
-        ->assertViewHas('ideas', function($ideas){
-            return $ideas->first()->voted_by_user == false;
-        });
+        Livewire::test(IdeasIndex::class)
+            ->assertViewHas('ideas', function($ideas){
+                return $ideas->first()->voted_by_user == false;
+            });
     }
     
        /** @test */
