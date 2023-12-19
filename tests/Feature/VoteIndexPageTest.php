@@ -13,6 +13,7 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
 use Database\Seeders\UserSeeder;
 
+use App\Models\User;
 use App\Models\Idea;
 use App\Models\Vote;
 
@@ -41,7 +42,7 @@ class VoteIndexPageTest extends TestCase
     }  
 
         /** @test */
-        public function test_show_page_correctly_receives_votes_count(){
+        public function test_index_page_correctly_receives_votes_count(){
             $idea = Idea::factory()->create([
                 'title' => 'My First Idea',
                 'description' => 'Description for my first idea',
@@ -72,8 +73,79 @@ class VoteIndexPageTest extends TestCase
             Livewire::test(IdeaIndex::class, [
                 'idea' => $idea,
                 'votesCount' => 777898,
+                'hasVoted' => 1,
             ])
             ->assertSet('votesCount',777898)
             ->assertSee('777898');
         }   
+    /** @test */
+    public function test_index_page_correctly_receives_has_voted(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+
+        $voteOne = Vote::factory()->create([
+            'user_id' => $user->id,
+            'idea_id' => $idea->id,
+        ]);
+
+        // Voted
+        $this->actingAs($user)
+            ->get(route('idea.index', $idea))
+            ->assertViewHas('ideas', function($ideas){
+                return $ideas->first()->voted_by_user == true;
+            });
+        // Not Voted
+        $this->actingAs($userB)
+            ->get(route('idea.index', $idea))
+            ->assertViewHas('ideas', function($ideas){
+                return $ideas->first()->voted_by_user == false;
+            });
+
+        // Guest
+        $this->get(route('idea.index', $idea))
+        ->assertViewHas('ideas', function($ideas){
+            return $ideas->first()->voted_by_user == false;
+        });
+    }
+    
+       /** @test */
+       public function test_has_voted_shows_correctly_on_idea_index_livewire_component(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description of my first idea',
+        ]);
+        
+        $vote = Vote::factory()->create([
+            'user_id'=> $user->id,
+            'idea_id'=> $idea->id,
+        ]);
+
+        // Voted
+        Livewire::actingAs($user)
+            ->test(IdeaIndex::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => $vote->id,
+            ])    
+            ->AssertSeeHtml('data-test="vote-button-has-voted"')
+            ->AssertSeeHtml('data-test-votes-count-blue');
+        
+        // Not voted
+        Livewire::actingAs($userB)
+            ->test(IdeaIndex::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->AssertDontSeeHtml('data-test="vote-button-has-voted"')
+            ->AssertDontSeeHtml('data-test-votes-count-blue');
+    }
 }

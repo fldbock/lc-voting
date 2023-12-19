@@ -12,9 +12,12 @@ class IdeaShow extends Component
     public $idea;
     public $votesCount;
 
-    public function mount(Idea $idea, $votesCount){
+    public $hasVoted;
+
+    public function mount(Idea $idea, $votesCount, $hasVoted){
         $this->idea = $idea;
         $this->votesCount = $votesCount;
+        $this->hasVoted = $hasVoted;
     }
     
     public function render()

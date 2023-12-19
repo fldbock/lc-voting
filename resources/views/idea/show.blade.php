@@ -9,7 +9,7 @@
     </div> <!-- end going back -->
 
     <!-- Showing the idea -->
-    <livewire:idea-show :idea="$idea" :votesCount="$votesCount"/>
+    <livewire:idea-show :idea="$idea" :votesCount="$votesCount" :hasVoted="$hasVoted"/>
 
     <!-- Comments container -->
     <div class="comments-container relative space-y-6 md:ml-22 my-8">

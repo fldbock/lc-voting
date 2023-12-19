@@ -13,8 +13,10 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
 use Database\Seeders\UserSeeder;
 
+use App\Models\User;
 use App\Models\Idea;
 use App\Models\Vote;
+use Mockery\Undefined;
 
 class VoteShowPageTest extends TestCase
 {
@@ -61,18 +63,85 @@ class VoteShowPageTest extends TestCase
             ->assertViewHas('votesCount', 2);
     }   
 
-        /** @test */
-        public function test_votes_count_shows_correctly_on_idea_show_livewire_component(){
-            $idea = Idea::factory()->create([
-                'title' => 'My First Idea',
-                'description' => 'Description for my first idea',
-            ]);
-            
-            Livewire::test(IdeaShow::class, [
-                'idea' => $idea,
-                'votesCount' => 777898,
-            ])
-            ->assertSet('votesCount',777898)
-            ->assertSee('777898');
-        }   
+    /** @test */
+    public function test_votes_count_shows_correctly_on_idea_show_livewire_component(){
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+        
+        Livewire::test(IdeaShow::class, [
+            'idea' => $idea,
+            'votesCount' => 777898,
+            'hasVoted' => 0,
+        ])
+        ->assertSet('votesCount',777898)
+        ->assertSee('777898');
+    }   
+    
+    /** @test */
+    public function test_show_page_correctly_receives_has_voted(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+
+        $voteOne = Vote::factory()->create([
+            'user_id' => $user->id,
+            'idea_id' => $idea->id,
+        ]);
+
+        // Voted
+        $this->actingAs($user)
+            ->get(route('idea.show', $idea))
+            ->assertViewHas('hasVoted', true);
+
+        // Not Voted
+        $this->actingAs($userB)
+            ->get(route('idea.show', $idea))
+            ->assertViewHas('hasVoted', null);
+
+        // Guest
+        $this->get(route('idea.show', $idea))
+            ->assertViewHas('hasVoted', null);
+    }
+        
+    /** @test */
+    public function test_has_voted_shows_correctly_on_idea_index_livewire_component(){
+        $user = User::factory()->create();
+        $userB = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'title' => 'My First Idea',
+            'description' => 'Description of my first idea',
+        ]);
+        
+        $vote = Vote::factory()->create([
+            'user_id'=> $user->id,
+            'idea_id'=> $idea->id,
+        ]);
+
+        // Voted
+        Livewire::actingAs($user)
+            ->test(IdeaShow::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => $vote->id,
+            ])    
+            ->AssertSeeHtml('data-test="vote-button-has-voted"')
+            ->AssertSeeHtml('data-test-votes-count-blue');
+        
+        // Not voted
+        Livewire::actingAs($userB)
+            ->test(IdeaShow::class, [
+                'idea'=> $idea,
+                'votesCount' => 5,
+                'hasVoted' => null,
+            ])    
+            ->AssertDontSeeHtml('data-test="vote-button-has-voted"')
+            ->AssertDontSeeHtml('data-test-votes-count-blue');
+    }   
 }
