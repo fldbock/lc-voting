@@ -16,4 +16,16 @@ class Status extends Model
     public function ideas(){
         return $this->hasMany(Idea::class);
     }
+
+    public static function getCount(){
+        return Idea::query()
+            ->SelectRaw("count(*) as all_statuses")
+            ->SelectRaw("sum(`status_id` = 1) as open")
+            ->SelectRaw("sum(`status_id` = 2) as in_progress")
+            ->SelectRaw("sum(`status_id` = 3) as closed")
+            ->SelectRaw("sum(`status_id` = 4) as implemented")
+            ->SelectRaw("sum(`status_id` = 5) as considering")
+            ->first()
+            ->toArray();
+    }
 }

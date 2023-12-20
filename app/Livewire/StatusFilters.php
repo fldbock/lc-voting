@@ -6,9 +6,11 @@ use Livewire\Component;
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Status;
 class StatusFilters extends Component
 {
     public $status = 'All';
+    public $statusCount;
 
     protected $queryString = [
         'status',
@@ -16,7 +18,9 @@ class StatusFilters extends Component
 
     public $currentRouteName;
     
-    public function mount(){
+    public function mount(){      
+        $this->statusCount = Status::getCount();
+
         if (Route::currentRouteName() === 'idea.show') {
             $this->status = null;
             $this->queryString = [];
