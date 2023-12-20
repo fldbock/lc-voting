@@ -81,7 +81,7 @@
     @apply text-white;
 }
 
-.close{
+.closed{
     @apply bg-red;
     @apply text-white;
 }

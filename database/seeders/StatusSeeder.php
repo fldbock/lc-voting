@@ -16,7 +16,7 @@ class StatusSeeder extends Seeder
     {
         Status::factory()->create(['id' => 1, 'name' => 'Open']);
         Status::factory()->create(['id' => 2, 'name' => 'In Progress']);
-        Status::factory()->create(['id' => 3, 'name' => 'Close']);
+        Status::factory()->create(['id' => 3, 'name' => 'Closed']);
         Status::factory()->create(['id' => 4, 'name' => 'Implemented']);
         Status::factory()->create(['id' => 5, 'name' => 'Considering']);
     }
