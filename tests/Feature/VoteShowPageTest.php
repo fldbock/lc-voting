@@ -16,7 +16,6 @@ use Database\Seeders\UserSeeder;
 use App\Models\User;
 use App\Models\Idea;
 use App\Models\Vote;
-use Mockery\Undefined;
 
 class VoteShowPageTest extends TestCase
 {
