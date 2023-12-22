@@ -9,21 +9,15 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Status;
 class StatusFilters extends Component
 {
-    public $status = 'All';
+    public $status;
     public $statusCount;
-
-    protected $queryString = [
-        'status',
-    ];
-
     public $currentRouteName;
     
     public function mount(){      
         $this->statusCount = Status::getCount();
+        $this->status= request()->status ?? 'All';
 
         if (Route::currentRouteName() === 'idea.show') {
-            $this->status = null;
-            $this->queryString = [];
             $this->currentRouteName = Route::currentRouteName();
         }
     }
@@ -35,6 +29,7 @@ class StatusFilters extends Component
 
     public function setStatus($status){
         $this->status = $status;
+        $this->dispatch('queryStringUpdatedStatus', $status);
         if ($this->currentRouteName === 'idea.show') {
             return redirect()->route('idea.index', [
                 'status' => $this->status,
