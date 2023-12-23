@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 use Livewire\Livewire;
 use App\Livewire\StatusFilters;
+use App\Livewire\IdeasIndex;
 
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
@@ -72,14 +73,13 @@ class StatusFiltersTest extends TestCase
             'status_id' => 5, //status Considering
         ]);
 
-        $response = $this->get(route('idea.index', ['status' => 'Implemented']))
-                        ->assertSuccessful()
-                        ->assertSee('<div class="implemented text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
-                        Implemented
-                    </div>',false)
-                        ->assertDontSee('<div class="considering text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
-                        Considering
-                    </div>',false);
+        Livewire::withQueryParams([
+            'status' => 'Implemented',
+            ])
+            ->test(IdeasIndex::class)
+            ->assertViewHas('ideas', function($ideas){
+                return $ideas->count() === 2;
+            });
     
     } 
 

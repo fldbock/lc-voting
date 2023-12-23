@@ -3,9 +3,9 @@
     <nav class="hidden md:flex items-center justify-between text-xs text-gray-400">
         <ul class="flex uppercase font-semibold space-x-10 border-b-4 pb-3">
             <li wire:click.prevent="setStatus('All')">
-                <a href="#" class="border-b-4 pb-3 hover:border-blue @if ($status === 'All'){
+                <a href="#" class="border-b-4 pb-3 hover:border-blue @if ($status === 'All' && $currentRouteName != 'idea.show'){
                      border-blue text-gray-900
-                    } @endif">All Ideas ({{  $statusCount["all_statuses"]}})</a>
+                    } @endif">All Ideas ({{  $statusCount["all_statuses"] }})</a>
             </li>
             <li wire:click.prevent="setStatus('Considering')">
                 <a href="#" class="transition duration-150 border-b-4 pb-3 hover:border-blue @if ($status === 'Considering'){
