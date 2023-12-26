@@ -56,7 +56,7 @@ class OtherFiltersTest extends TestCase
         Livewire::test(IdeasIndex::class)
             ->set('filter', 'Top Voted')
             ->assertViewHas('ideas', function($ideas) use ($ideaOne){
-                return true;
+                return $ideas->first()->id === $ideaOne->id;
             });
 
         

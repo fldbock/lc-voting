@@ -17,13 +17,14 @@ class IdeasIndex extends Component
     use WithPagination;
     public $status;
     public $category;
-
     public $filter;
+    public $search;
 
     protected $queryString = [
-        'status' => ['except', 'All'],
+        'status',
         'category',
         'filter',
+        'search',
     ];
 
     protected $listeners = [
@@ -44,6 +45,10 @@ class IdeasIndex extends Component
         $this->resetPage();
     }
     
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function updatedFilter($newFilter){
         if ($this->filter === 'My Ideas' && !auth()->check()){
             return redirect()->route('login');
@@ -68,6 +73,8 @@ class IdeasIndex extends Component
                 })
                 ->when($this->filter === 'My Ideas', function ($query) {                 
                     return $query->where('user_id', auth()->user()->id);
+                })->when(strlen($this->search) >= 3, function ($query) {                 
+                    return $query->where('title', 'like', '%'.$this->search.'%');
                 })
                 ->addSelect(['voted_by_user' => Vote::Select('id')
                     ->where('user_id', auth()->id())
