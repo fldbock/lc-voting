@@ -148,4 +148,23 @@ class ShowIdeasTests extends TestCase
 
         $this->assertNotSame($ideaOne->slug, $ideaTwo->slug);
     }
+
+    /** @test */
+    public function test_back_button_works_when_index_page_visited_first(){        
+        $ideaOne = Idea::factory()->create();
+
+        $response = $this->get('/?category=Category+1&status=Considering');
+        $response = $this->get(route('idea.show', $ideaOne));
+
+        $this->assertStringContainsString('/?category=Category%201&status=Considering', $response['backUrl']);
+    }
+
+    /** @test */
+    public function test_back_button_works_when_show_page_is_the_only_page_visited(){        
+        $ideaOne = Idea::factory()->create();
+
+        $response = $this->get(route('idea.show', $ideaOne));
+
+        $this->assertEquals($response['backUrl'], route('idea.index'));
+    }
 }

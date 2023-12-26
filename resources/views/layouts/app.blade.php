@@ -20,7 +20,7 @@
 
     <body class="font-sans bg-gray-background text-gray-900 text-sm px-2 md:px-10">
         <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4">            
-            <a href="#"><img src="{{ asset('img/logo-dark.svg') }}" alt=""></a>
+            <a href="/"><img src="{{ asset('img/logo-dark.svg') }}" alt=""></a>
             <div class="flex items-center mt-2 md:mt-0">
                 @if (Route::has('login'))
                     <livewire:welcome.navigation />
