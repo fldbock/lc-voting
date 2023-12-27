@@ -38,12 +38,12 @@ class IdeaController extends Controller
      * Display the specified resource.
      */
     public function show(Idea $idea)
-    {
+    {   
         return view('idea.show', [
             'idea' => $idea,
             'votesCount' => $idea->votes()->count(),
             'hasVoted' => $idea->isVotedByUser(auth()->user()),
-            'backUrl' => url()->previous() !== url()->full() ? url()->previous() : route('index.idea'),
+            'backUrl' => url()->previous() !== url()->full() ? url()->previous() : route('idea.index'),
         ]);
     }
 

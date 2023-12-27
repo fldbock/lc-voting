@@ -19,8 +19,14 @@ class UserSeeder extends Seeder
             'name' => 'Flor',
             'email'=> 'flor.debock@gmail.com',
         ]);
+
+        User::factory()->create([
+            'id' => 2,
+            'name' => 'Rolf',
+            'email'=> 'rolf.debock@gmail.com',
+        ]);
         
-        for ($i = 2; $i <= 20; $i++) {
+        for ($i = 3; $i <= 20; $i++) {
             User::factory()->create([
                 'id'=> $i,
             ]);

@@ -5,9 +5,6 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-use Database\Seeders\CategorySeeder;
-use Database\Seeders\StatusSeeder;
-
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Status;

@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\NotifyAllVoters;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+
+use Illuminate\Support\Facades\Queue;
 
 use Livewire\Livewire;
 use App\Livewire\SetStatus;
@@ -88,5 +91,29 @@ class AdminSetStatusTest extends TestCase
             'id'=> $idea->id,
             'status_id' => 4,
         ]);
+    }  
+
+    /** @test */
+    public function test_can_set_status_correctly_while_notifying_all_voters(){
+        $userAdmin = User::where(['email' => 'flor.debock@gmail.com'])->first();
+        $idea = Idea::factory()->create([
+            'status_id' => 3,
+        ]);
+        
+        Queue::fake();
+
+        Queue::assertNothingPushed();
+
+        Livewire::actingAs($userAdmin)
+            ->test(SetStatus::class, [
+                'idea' => $idea,
+            ])
+            ->set([
+                'status' => 4,
+                'notifyAllVoters' => true,
+            ])
+            ->call('setStatus');
+        
+        Queue::assertPushed(NotifyAllVoters::class);
     }  
 }
