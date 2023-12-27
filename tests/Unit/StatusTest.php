@@ -5,13 +5,9 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
-use Database\Seeders\UserSeeder;
 
-use App\Models\User;
 use App\Models\Status;
-use App\Models\Category;
 use App\Models\Idea;
 
 class StatusTest extends TestCase
@@ -21,8 +17,6 @@ class StatusTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(UserSeeder::class);
-        $this->seed(CategorySeeder::class);
         $this->seed(StatusSeeder::class);
     }
 

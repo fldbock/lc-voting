@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use Livewire\Livewire;
@@ -11,12 +10,8 @@ use App\Livewire\IdeasIndex;
 
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
-use Database\Seeders\UserSeeder;
 
-use App\Models\User;
-use App\Models\Status;
 use App\Models\Idea;
-use App\Models\Vote;
 
 class CategoryFiltersTest extends TestCase
 {
@@ -24,9 +19,7 @@ class CategoryFiltersTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(UserSeeder::class);
         $this->seed(CategorySeeder::class);
-        $this->seed(StatusSeeder::class);
     }
 
     /** @test */
@@ -93,6 +86,7 @@ class CategoryFiltersTest extends TestCase
 
     /** @test */
     public function test_selecting_a_status_and_a_category_filters_correctly(){
+        $this->seed(StatusSeeder::class);
         Idea::factory(2)->create([
             'category_id'=> 1,
             'status_id' => 4,//status Implemented
@@ -131,6 +125,7 @@ class CategoryFiltersTest extends TestCase
     } 
     /** @test */
     public function test_category_status_query_string_filters_correctly(){
+        $this->seed(StatusSeeder::class);
         Idea::factory(2)->create([
             'category_id'=> 1,
             'status_id' => 4,//status Implemented

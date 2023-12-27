@@ -16,18 +16,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 
-//TODO: fix up the tests with livewire components instead of looking on the page, because looking on the page isn't specific (could be anywhere on the page) and probably overcomplicated. I don't yet understand how this livewire testing is valid tho. Example in comments Episode 14: adding statuses
 class ShowIdeasTests extends TestCase
 {
     use RefreshDatabase;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(UserSeeder::class);
-        $this->seed(CategorySeeder::class);
-        $this->seed(StatusSeeder::class);
-    }
     
     /** @test */
     public function test_list_of_ideas_shows_on_main_page(){
@@ -96,23 +87,18 @@ class ShowIdeasTests extends TestCase
      * Ideas are displayed in descending order by created_at attribute
     */
     public function test_ideas_pagination_works(){
-        //  Arrange       
-        $category = Category::factory()->create(['name' => 'Category 1']);
-
         $ideaOnSecondPage = Idea::factory()->create([
             'title' => 'My Idea On The Second Page',
-            'category_id'=> $category->id,
         ]);
 
         // Trick to get the number of ideas displayed per page
         $closure = function(){return $this->perPage;};
         $perPage = Closure::bind($closure, $ideaOnSecondPage, 'App\Models\Idea')();
         
-        Idea::factory($perPage-1)->create(['category_id'=> $category->id]);
+        Idea::factory($perPage-1)->create();
 
         $ideaOnFirstPage = Idea::factory()->create([
             'title' => 'My Idea On The First Page',
-            'category_id'=> $category->id,
         ]);
 
         // Act
@@ -134,16 +120,12 @@ class ShowIdeasTests extends TestCase
 
     /** @test */
     public function test_same_idea_title_different_slugs(){
-        //  Arrange
-        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
         $ideaOne = Idea::factory()->create([
             'title' => 'My First Idea',
-            'category_id'=> $categoryOne->id,
         ]);
 
         $ideaTwo = Idea::factory()->create([
             'title' => 'My First Idea',
-            'category_id'=> $categoryOne->id,
         ]);
 
         $this->assertNotSame($ideaOne->slug, $ideaTwo->slug);

@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\NotifyAllVoters;
 use App\Mail\IdeaStatusUpdatedMailable;
 use App\Models\User;
-use App\Models\Category;
-use App\Models\Status;
 use App\Models\Idea;
 use App\Models\Vote;
 
@@ -28,16 +26,7 @@ class NotifyAllVotersTest extends TestCase
             'email' => 'userB@gmail.com',
         ])->create();
 
-        $category = Category::factory()->create();
-        $status = Status::factory()->create();
-
-        $idea = Idea::factory()->create([
-            'user_id' => $user->id,
-            'category_id'=> $category->id,
-            'status_id'=> $status->id,
-            'title' => 'My First Idea',
-            'description' => 'Description of my first idea',
-        ]);
+        $idea = Idea::factory()->create();
 
         Vote::factory()->create([
             'user_id'=> $user->id,

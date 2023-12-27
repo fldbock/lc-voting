@@ -9,23 +9,16 @@ use Tests\TestCase;
 use Livewire\Livewire;
 
 use Database\Seeders\CategorySeeder;
-use Database\Factories\CategoryFactory;
 use Database\Seeders\StatusSeeder;
-use Database\Factories\StatusFactory;
 
 use App\Models\User;
+use App\Models\Idea;
 
 use App\Livewire\CreateIdea;
 
 class CreateIdeaTest extends TestCase
 {
     use RefreshDatabase;
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(CategorySeeder::class);
-        $this->seed(StatusSeeder::class);
-    }
     
     /** @test */
     public function test_create_idea_form_does_not_show_when_logged_out(){
@@ -64,22 +57,29 @@ class CreateIdeaTest extends TestCase
             ->assertSee('The title field is required');
     }
 
-        /** @test */
-        public function test_creating_an_idea_works_correctly(){
-            //  Assert redirect
-            Livewire::actingAs(User::factory()->create())
-                ->test(CreateIdea::class)
-                ->set('title', 'My first idea')
-                ->set('category', 1)
-                ->set('description', 'This is my first idea')
-                ->call('createIdea')
-                ->assertRedirect('/');
-            
-            // Assert Idea on index page
-            $response = $this->actingAs(User::factory()->create())->get(route(('idea.index')));
-            $response->assertSuccessful();
-            $response->assertSee('This is my first idea');
-                
-        }
+    /** @test */
+    public function test_creating_an_idea_works_correctly(){
+        $this->seed(CategorySeeder::class);
+        $this->seed(StatusSeeder::class);
+        $user = User::factory()->create();
+        //  Assert redirect
+        Livewire::actingAs($user)
+            ->test(CreateIdea::class)
+            ->set('title', 'My first idea')
+            ->set('category', 1)
+            ->set('description', 'This is my first idea')
+            ->call('createIdea')
+            ->assertRedirect('/');
+        
+        // Assert Idea on index page
+        $response = $this->actingAs($user)->get(route(('idea.index')));
+        $response->assertSuccessful();
+        $response->assertSee('This is my first idea');
+
+        // Assert you automatically voted for this idea
+        $createdIdea = $user->votes()->first();
+        
+        $this->assertTrue($createdIdea && $createdIdea->description == 'This is my first idea');
+    }
 }
 

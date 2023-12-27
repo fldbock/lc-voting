@@ -3,53 +3,30 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use Livewire\Livewire;
 use App\Livewire\IdeasIndex;
 
-use Database\Seeders\CategorySeeder;
-use Database\Seeders\StatusSeeder;
-use Database\Seeders\UserSeeder;
-
 use App\Models\User;
-use App\Models\Status;
 use App\Models\Idea;
 use App\Models\Vote;
+use Database\Seeders\CategorySeeder;
 
 class OtherFiltersTest extends TestCase
 {
     use RefreshDatabase;
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(UserSeeder::class);
-        $this->seed(CategorySeeder::class);
-        $this->seed(StatusSeeder::class);
-    }
 
     /** @test */
     public function test_top_voted_filter_works(){
-        $ideaOne = Idea::factory()->create([
-            'user_id'=> 1,
-        ]);
-        $ideaTwo = Idea::factory()->create([
-            'user_id' => 1,
-        ]);
+        $ideaOne = Idea::factory()->create();
+        $ideaTwo = Idea::factory()->create();
 
-        Vote::factory()->create([
-            'user_id' => 1,
+        Vote::factory(2)->create([
             'idea_id' => $ideaOne->id,            
             ]);
 
         Vote::factory()->create([
-            'user_id' => 2,
-            'idea_id' => $ideaOne->id,            
-            ]);
-
-        Vote::factory()->create([
-            'user_id' => 1,
             'idea_id'=> $ideaTwo->id,
             ]);
 
@@ -60,14 +37,7 @@ class OtherFiltersTest extends TestCase
             });
 
         
-        Vote::factory()->create([
-            'user_id' => 2,
-            'idea_id'=> $ideaTwo->id,
-            ]);
-
-    
-        Vote::factory()->create([
-            'user_id' => 3,
+        Vote::factory(2)->create([
             'idea_id'=> $ideaTwo->id,
             ]);
 
@@ -113,6 +83,7 @@ class OtherFiltersTest extends TestCase
 
     /** @test */
     public function test_my_ideas_filter_works_with_category_filter(){
+        $this->seed(CategorySeeder::class);
         $userOne = User::factory()->create();
         $userTwo = User::factory()->create();
 
@@ -139,19 +110,19 @@ class OtherFiltersTest extends TestCase
             });
     }   
 
-        /** @test */
-        public function test_no_filter_works(){
-            $user = User::factory()->create();
-    
-            Idea::factory(3)->create([
-                'user_id'=> $user->id,
-            ]);
+    /** @test */
+    public function test_no_filter_works(){
+        $user = User::factory()->create();
 
-            //  Logged in as userOne
-            Livewire::test(IdeasIndex::class)
-                ->set('filter', 'No Filter')
-                ->assertViewHas('ideas', function($ideas) {
-                    return $ideas->count() == 3;
-                });
-        } 
+        Idea::factory(3)->create([
+            'user_id'=> $user->id,
+        ]);
+
+        //  Logged in as userOne
+        Livewire::test(IdeasIndex::class)
+            ->set('filter', 'No Filter')
+            ->assertViewHas('ideas', function($ideas) {
+                return $ideas->count() == 3;
+            });
+    } 
 }

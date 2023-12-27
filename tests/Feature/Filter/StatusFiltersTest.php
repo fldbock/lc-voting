@@ -10,9 +10,7 @@ use Livewire\Livewire;
 use App\Livewire\StatusFilters;
 use App\Livewire\IdeasIndex;
 
-use Database\Seeders\CategorySeeder;
 use Database\Seeders\StatusSeeder;
-use Database\Seeders\UserSeeder;
 
 use App\Models\User;
 use App\Models\Status;
@@ -26,8 +24,6 @@ class StatusFiltersTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(UserSeeder::class);
-        $this->seed(CategorySeeder::class);
         $this->seed(StatusSeeder::class);
     }
 

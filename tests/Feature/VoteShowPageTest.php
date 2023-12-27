@@ -3,15 +3,10 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use Livewire\Livewire;
 use App\Livewire\IdeaShow;
-
-use Database\Seeders\CategorySeeder;
-use Database\Seeders\StatusSeeder;
-use Database\Seeders\UserSeeder;
 
 use App\Models\User;
 use App\Models\Idea;
@@ -20,21 +15,10 @@ use App\Models\Vote;
 class VoteShowPageTest extends TestCase
 {
     use RefreshDatabase;
-    
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(UserSeeder::class);
-        $this->seed(CategorySeeder::class);
-        $this->seed(StatusSeeder::class);
-    }
 
     /** @test */
     public function test_show_page_contains_idea_show_livewire_component(){
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
+        $idea = Idea::factory()->create();
 
         $this->get(route('idea.show', $idea))
             ->assertSuccessful()
@@ -43,18 +27,9 @@ class VoteShowPageTest extends TestCase
 
     /** @test */
     public function test_show_page_correctly_receives_votes_count(){
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
+        $idea = Idea::factory()->create();
 
-        $voteOne = Vote::factory()->create([
-            'user_id' => 1,
-            'idea_id' => $idea->id,
-        ]);
-
-        $voteTwo = Vote::factory()->create([
-            'user_id' => 2,
+        Vote::factory(2)->create([
             'idea_id' => $idea->id,
         ]);
 
@@ -64,10 +39,7 @@ class VoteShowPageTest extends TestCase
 
     /** @test */
     public function test_votes_count_shows_correctly_on_idea_show_livewire_component(){
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
+        $idea = Idea::factory()->create();
         
         Livewire::test(IdeaShow::class, [
             'idea' => $idea,
@@ -83,14 +55,11 @@ class VoteShowPageTest extends TestCase
         $user = User::factory()->create();
         $userB = User::factory()->create();
 
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
+        $idea = Idea::factory()->create();
 
-        $voteOne = Vote::factory()->create([
+        Vote::factory()->create([
             'user_id' => $user->id,
-            'idea_id' => $idea->id,
+            'idea_id'=> $idea->id,
         ]);
 
         // Voted
@@ -112,10 +81,7 @@ class VoteShowPageTest extends TestCase
     public function test_has_voted_shows_correctly_on_idea_index_livewire_component(){
         $user = User::factory()->create();
 
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description of my first idea',
-        ]);
+        $idea = Idea::factory()->create();
         
         $vote = Vote::factory()->create([
             'user_id'=> $user->id,
@@ -148,10 +114,7 @@ class VoteShowPageTest extends TestCase
         $user = User::factory()->create();
         $userB = User::factory()->create();
 
-        $idea = Idea::factory()->create([
-            'title' => 'My First Idea',
-            'description' => 'Description of my first idea',
-        ]);
+        $idea = Idea::factory()->create();
 
         $vote = Vote::factory()->create([
             'user_id'=> $user->id,
