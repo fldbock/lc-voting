@@ -62,13 +62,20 @@
                                 style="display:none;"
                             >
                                 <li>
-                                    <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
-                                        Delete Idea
+                                    <a         
+                                        href="#" 
+                                        @click.prevent="
+                                            $dispatch('open-edit-idea-modal')
+                                            isOpen = false
+                                            "
+                                        class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in"
+                                        >
+                                        Edit Idea
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
-                                        Edit Idea
+                                        Delete Idea
                                     </a>
                                 </li>
                                 <li>
@@ -124,6 +131,7 @@
                 </button>
                 <!-- Reply popup -->
                 <div 
+                    x-cloak
                     x-show="isOpen"
                     x-transition.origin.top.left
                     @click.away="isOpen = false"
