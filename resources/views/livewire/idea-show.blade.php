@@ -83,7 +83,7 @@
                                             $dispatch('open-delete-idea-modal')
                                             isOpen = false
                                             "
-                                        class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in"
+                                        class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-delete-idea-li"
                                         >
                                         Delete Idea
                                     </a>

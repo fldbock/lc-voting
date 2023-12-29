@@ -17,7 +17,7 @@
     @endcan
 
     <!-- Delete Idea Modal -->
-    @can('update', $idea)
+    @can('delete', $idea)
         <livewire:delete-idea  :idea="$idea"/>
     @endcan
 
