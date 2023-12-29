@@ -17,7 +17,7 @@ class EditIdea extends Component
 
     protected $rules = [
         'title' => 'required|min:4',
-        'category' => 'required|integer|exists:categories,id',
+        'category' => 'required|exists:App\Models\Category,id',
         'description'=> 'required|min:4',
     ];
 
