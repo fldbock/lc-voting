@@ -12,7 +12,9 @@
     <livewire:idea-show :idea="$idea" :votesCount="$votesCount" :hasVoted="$hasVoted"/>
 
     <!-- Edit Idea Modal -->
-    <livewire:edit-idea />
+    @can('update', $idea)
+        <livewire:edit-idea :idea="$idea"/>
+    @endcan
 
     <!-- Comments container -->
     <div class="comments-container relative space-y-6 md:ml-22 my-8">

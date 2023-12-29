@@ -61,18 +61,20 @@
                                 class="z-10 absolute w-44 text-left md:ml-8 top-8 md:top-6 right-0 md:left-0 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
                                 style="display:none;"
                             >
-                                <li>
-                                    <a         
-                                        href="#" 
-                                        @click.prevent="
-                                            $dispatch('open-edit-idea-modal')
-                                            isOpen = false
-                                            "
-                                        class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in"
-                                        >
-                                        Edit Idea
-                                    </a>
-                                </li>
+                                @can('update', $idea)
+                                    <li>
+                                        <a         
+                                            href="#" 
+                                            @click.prevent="
+                                                $dispatch('open-edit-idea-modal')
+                                                isOpen = false
+                                                "
+                                            class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in"
+                                            >
+                                            Edit Idea
+                                        </a>
+                                    </li>
+                                @endcan
                                 <li>
                                     <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
                                         Delete Idea

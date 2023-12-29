@@ -4,6 +4,11 @@
     x-show = "isOpen"
     @keydown.escape.window="isOpen = false"
     @open-edit-idea-modal.window="isOpen = true"
+    x-init="
+        $wire.on('ideaWasUpdated', () => {
+            isOpen = false
+        })
+    "
     class="relative z-10" 
     aria-labelledby="modal-title" 
     role="dialog" 
@@ -42,11 +47,17 @@
                     <p class="text-center text-xs text-gray-500 mt-4">
                         You have one hour to edit your idea from the time you created it.
                     </p>
-                    <!-- Edit Idea Form -->
-                    <form wire:submit.prevent="createIdea" action="#" method="POST" class="space-y-4 px-4 py-6">
+                    <!-- Update Idea Form -->
+                    <form wire:submit.prevent="updateIdea" action="#" method="POST" class="space-y-4 px-4 py-6">
                         <!-- Title -->
                         <div>
-                            <input wire:model.defer="title" type="text" class="w-full text-sm bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2" placeholder="Your Idea" required>
+                            <input 
+                                wire:model.defer="title"
+                                type="text"
+                                class="w-full text-sm bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2"
+                                placeholder="Your Idea" 
+                                required
+                                >
                             @error('title')
                                 <p class="text-red text-xs mt-1">
                                     {{  $message  }}
@@ -55,8 +66,15 @@
                         </div>
                         <!-- Category -->
                         <div>
-                            <select wire:model.defer="category" name="category_add" id="category_add" class="w-full text-sm bg-gray-100 rounded-xl border-none px-4 py-2">
-                                <option value="1">Category 1</option>
+                            <select 
+                                wire:model.defer="category" 
+                                name="category_add" 
+                                id="category_add" 
+                                class="w-full text-sm bg-gray-100 rounded-xl border-none px-4 py-2"
+                                >
+                                @foreach ($categories as $category)
+                                    <option value="{{  $category->id  }}">{{  $category->name  }}</option>
+                                @endforeach
                             </select>
                             @error('category')
                                 <p class="text-red text-xs mt-1">
@@ -66,7 +84,17 @@
                         </div>
                         <!-- Description -->
                         <div>
-                            <textarea wire:model.defer="description" name="idea" id="idea" cols="30" rows="4" class="w-full bg-gray-100 rounded-xl border-none placeholder-gray-900 text-sm px-4 py-2" placeholder="Describe your idea" required></textarea>
+                            <textarea 
+                                wire:model.defer="description" 
+                                name="idea" 
+                                id="idea" 
+                                cols="30" 
+                                rows="4" 
+                                class="w-full bg-gray-100 rounded-xl border-none placeholder-gray-900 text-sm px-4 py-2" 
+                                placeholder="Describe your idea" 
+                                required
+                            >
+                            </textarea>
                             @error('description')
                                 <p class="text-red text-xs mt-1">
                                     {{  $message  }}
@@ -86,7 +114,7 @@
                             <button 
                                 type="submit"
                                 class="flex items-center justify-center w-1/2 h-11 text-white text-xs bg-blue font-semibold rounded-xl hover:bg-blue-hover transition duration-150 ease-in px-6 py-3">
-                                <span class="ml-1"> Submit</span>
+                                <span class="ml-1"> Update</span>
                             </button>
                         </div>
                         <!-- Success Message -->
