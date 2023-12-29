@@ -14,6 +14,7 @@
     role="dialog" 
     aria-modal="true"
     >
+    <!-- Background -->
     <div        
         x-show="isOpen"
         x-transition.opacity

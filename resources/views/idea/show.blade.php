@@ -16,6 +16,11 @@
         <livewire:edit-idea :idea="$idea"/>
     @endcan
 
+    <!-- Delete Idea Modal -->
+    @can('update', $idea)
+        <livewire:delete-idea  :idea="$idea"/>
+    @endcan
+
     <!-- Comments container -->
     <div class="comments-container relative space-y-6 md:ml-22 my-8">
         <div class="comment-container relative mt-4 bg-white rounded-xl flex">
