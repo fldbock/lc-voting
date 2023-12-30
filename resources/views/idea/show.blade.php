@@ -1,4 +1,5 @@
 <x-app-layout>
+    <!-- BackUrl -->
     <div>
         <a href="{{  $backUrl  }}" class="flex items-center font-semibold hover:underline">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -11,6 +12,10 @@
     <!-- Showing the idea -->
     <livewire:idea-show :idea="$idea" :votesCount="$votesCount" :hasVoted="$hasVoted"/>
 
+    <!-- Success Message Notification -->
+    <x-notification-success />
+
+    <!-- Modals Container -->
     <x-modals-container :idea="$idea"/>
 
     <!-- Comments container -->
