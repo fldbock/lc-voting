@@ -11,6 +11,11 @@
                     {{  $idea->title  }}
                 </h4>
                 <div class="text-gray-600 mt-3 line-clamp-3">
+                    @admin
+                        @if ($idea->spam_reports > 0)
+                            <div class="text-red mb-2">Spam Reports: {{  $idea->spam_reports  }}</div>
+                        @endif
+                    @endadmin
                     {{  $idea->description  }}
                 </div>
                 <div class="flex flex-col md:flex-row md:items-center justify-between mt-6">
@@ -41,61 +46,84 @@
                         <div class="{{  Str::kebab($idea->status->name)  }}  text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2">
                             {{  $idea->status->name  }}
                         </div>
-                        <div 
-                            x-data="{ isOpen: false }"
-                            class="relative"
-                            >
-                            <button 
-                                    @click="isOpen = !isOpen"
-                                    class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                        @auth
+                            <div 
+                                x-data="{ isOpen: false }"
+                                class="relative"
                                 >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                                </svg>                                
-                            </button>
-                            <ul 
-                                x-show="isOpen"
-                                x-transition.origin.top.left
-                                @click.away="isOpen = false"
-                                @keydown.escape.window="isOpen=false"
-                                class="z-10 absolute w-44 text-left md:ml-8 top-8 md:top-6 right-0 md:left-0 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
-                                style="display:none;"
-                            >
-                                @can('update', $idea)
+                                <button 
+                                        @click="isOpen = !isOpen"
+                                        class="relative px-4 py-2 bg-gray-100 hover:bg-gray-200 border rounded-full h-7 transition duration-150 ease-in"
+                                    >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                    </svg>                                
+                                </button>
+                                <ul 
+                                    x-show="isOpen"
+                                    x-transition.origin.top.left
+                                    @click.away="isOpen = false"
+                                    @keydown.escape.window="isOpen=false"
+                                    class="z-10 absolute w-44 text-left md:ml-8 top-8 md:top-6 right-0 md:left-0 py-3 font-semi-bold bg-white shadow-dialog rounded-xl"
+                                    style="display:none;"
+                                >
+                                    @can('update', $idea)
+                                        <li>
+                                            <a         
+                                                href="#" 
+                                                @click.prevent="
+                                                    $dispatch('open-edit-idea-modal')
+                                                    isOpen = false
+                                                    "
+                                                class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-edit-idea-li"
+                                                >
+                                                Edit Idea
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('delete', $idea)
                                     <li>
                                         <a         
                                             href="#" 
                                             @click.prevent="
-                                                $dispatch('open-edit-idea-modal')
+                                                $dispatch('open-delete-idea-modal')
                                                 isOpen = false
                                                 "
-                                            class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-edit-idea-li"
+                                            class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-delete-idea-li"
                                             >
-                                            Edit Idea
+                                            Delete Idea
                                         </a>
                                     </li>
-                                @endcan
-                                @can('delete', $idea)
-                                <li>
-                                    <a         
-                                        href="#" 
-                                        @click.prevent="
-                                            $dispatch('open-delete-idea-modal')
-                                            isOpen = false
-                                            "
-                                        class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-delete-idea-li"
-                                        >
-                                        Delete Idea
-                                    </a>
-                                </li>
-                                @endcan
-                                <li>
-                                    <a href="#" class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in">
-                                        Mark as Spam
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>                        
+                                    @endcan
+                                    <li>
+                                        <a         
+                                            href="#" 
+                                            @click.prevent="
+                                                $dispatch('open-mark-idea-as-spam-modal')
+                                                isOpen = false
+                                                "
+                                            class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-mark-idea-as-spam-li"
+                                            >
+                                            Mark as Spam
+                                        </a>
+                                    </li>
+                                    @admin
+                                        <li>
+                                            <a         
+                                                href="#" 
+                                                @click.prevent="
+                                                    $dispatch('open-mark-idea-as-not-spam-modal')
+                                                    isOpen = false
+                                                    "
+                                                class="block hover:bg-gray-100 px-5 py-3 transition duration-150 ease-in data-test-mark-idea-as-not-spam-li"
+                                                >
+                                                Mark as Not Spam
+                                            </a>
+                                        </li>
+                                    @endadmin
+                                </ul>
+                            </div>   
+                            @endauth                     
                     </div>
                 </div>
             </div>
@@ -172,11 +200,9 @@
                     </form>
                 </div>
             </div>
-            @auth
-                @if(auth()->user()->isAdmin())
-                    <livewire:set-status :idea="$idea" />
-                @endif
-            @endauth
+            @admin
+                <livewire:set-status :idea="$idea" />
+            @endadmin
         <div class="hidden md:flex items-center space-x-3">
             <div class="bg-white font-semibold text-center rounded-xl px-3 py-2">
                 <div class="text-xl leading-snug @if($hasVoted) text-blue @endif">

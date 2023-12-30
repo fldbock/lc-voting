@@ -21,6 +21,16 @@
         <livewire:delete-idea  :idea="$idea"/>
     @endcan
 
+    <!-- Mark as Not Spam Modal -->
+    @auth
+        <livewire:mark-idea-as-not-spam  :idea="$idea"/>
+    @endauth
+
+    <!-- Mark as Spam Modal -->
+    @auth
+        <livewire:mark-idea-as-spam  :idea="$idea"/>
+    @endauth
+
     <!-- Comments container -->
     <div class="comments-container relative space-y-6 md:ml-22 my-8">
         <div class="comment-container relative mt-4 bg-white rounded-xl flex">

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use Illuminate\Http\Response;
+
 use Livewire\Component;
 
 use App\Models\Category;
@@ -49,10 +51,10 @@ class IdeasIndex extends Component
         $this->resetPage();
     }
 
-    public function updatedFilter($newFilter){
+    public function updatedFilter(){
         if ($this->filter === 'My Ideas' && !auth()->check()){
             return redirect()->route('login');
-        }        
+        }      
     }
     public function render()
     {   
@@ -73,6 +75,9 @@ class IdeasIndex extends Component
                 })
                 ->when($this->filter === 'My Ideas', function ($query) {                 
                     return $query->where('user_id', auth()->user()->id);
+                })->when($this->filter === 'Spam Ideas', function ($query) {                 
+                    return $query->where('spam_reports', '>', 0)
+                                ->orderByDesc('spam_reports');
                 })->when(strlen($this->search) >= 3, function ($query) {                 
                     return $query->where('title', 'like', '%'.$this->search.'%');
                 })

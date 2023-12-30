@@ -1,4 +1,4 @@
-<div
+<div    
     x-data="{ isOpen: false }"
     x-init="
         $wire.on('statusWasUpdated', () => {
@@ -21,6 +21,7 @@
     </button>
     <!-- set status popup -->
     <div 
+        x-cloak
         x-show="isOpen"
         x-transition.origin.top.left
         @click.away="isOpen = false"
