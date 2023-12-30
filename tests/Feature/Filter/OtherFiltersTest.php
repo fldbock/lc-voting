@@ -125,4 +125,31 @@ class OtherFiltersTest extends TestCase
                 return $ideas->count() == 3;
             });
     } 
+
+    /** @test */
+    public function test_spam_ideas_filter_works(){
+        $userAdmin = User::factory()->create([
+            'email' => 'flor.debock@gmail.com',
+        ]);
+
+        Idea::factory()->create([
+            'spam_reports' => 0,
+        ]);
+
+        Idea::factory()->create([
+            'spam_reports' => 1,
+        ]);
+
+        Idea::factory()->create([
+            'spam_reports' => 2,
+        ]);
+
+        //  Admin
+        Livewire::actingAs($userAdmin)
+            ->test(IdeasIndex::class)
+            ->set('filter', 'Spam Ideas')
+            ->assertViewHas('ideas', function($ideas) {
+                return $ideas->count() == 2 && $ideas->first()->spam_reports === 2;
+            });
+    } 
 }

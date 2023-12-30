@@ -13,7 +13,7 @@
                 <div class="text-gray-600 mt-3 line-clamp-3">
                     @admin
                         @if ($idea->spam_reports > 0)
-                            <div class="text-red mb-2">Spam Reports: {{  $idea->spam_reports  }}</div>
+                            <div class="text-red mb-2 data-test-spam-reports-counter">Spam Reports: {{  $idea->spam_reports  }}</div>
                         @endif
                     @endadmin
                     {{  $idea->description  }}

@@ -28,7 +28,7 @@
                 <option value="Top Voted">Top Voted</option>
                 <option value="My Ideas">My Ideas</option>
                 @admin
-                    <option value="Spam Ideas">Spam Ideas</options>
+                    <option value="Spam Ideas" class="data-test-spam-ideas">Spam Ideas</options>
                 @endadmin
             </select>
         </div>
