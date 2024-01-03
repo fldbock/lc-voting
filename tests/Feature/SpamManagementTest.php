@@ -191,7 +191,7 @@ class SpamManagementTest extends TestCase
                 'idea'=> $idea,
             ])
             ->call('markIdeaAsSpam')
-            ->assertDispatched('ideaWasMarkedAsSpam');
+            ->assertDispatched('idea-was-marked-as-spam');
 
         $this->assertDatabaseHas('ideas', [
             'Title' => 'My Idea',
@@ -228,7 +228,7 @@ class SpamManagementTest extends TestCase
                 'idea'=> $idea,
             ])
             ->call('markIdeaAsNotSpam')
-            ->assertDispatched('ideaWasMarkedAsNotSpam');
+            ->assertDispatched('idea-was-marked-as-not-spam');
 
         $this->assertDatabaseHas('ideas', [
             'Title' => 'My Idea',

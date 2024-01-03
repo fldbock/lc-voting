@@ -12,11 +12,11 @@
     <!-- Showing the idea -->
     <livewire:idea-show :idea="$idea" :votesCount="$votesCount" :hasVoted="$hasVoted"/>
 
-    <!-- Success Message Notification -->
-    <x-notification-success />
-
     <!-- Modals Container -->
     <x-modals-container :idea="$idea"/>
+
+    <!-- Success Message Notification -->
+    <x-notification-success />
 
     <!-- Comments container -->
     <div class="comments-container relative space-y-6 md:ml-22 my-8">

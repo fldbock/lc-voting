@@ -1,7 +1,7 @@
 <div    
     x-data="{ isOpen: false }"
     x-init="
-        $wire.on('statusWasUpdated', () => {
+        $wire.on('status-was-updated', () => {
             isOpen = false
         })
     "

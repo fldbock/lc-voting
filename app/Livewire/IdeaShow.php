@@ -15,10 +15,10 @@ class IdeaShow extends Component
     public $hasVoted;
 
     protected $listeners = [
-        'statusWasUpdated' => '$refresh',
-        'ideaWasUpdated' => '$refresh',
-        'ideaWasMarkedAsSpam'=> '$refresh',
-        'ideaWasMarkedAsNotSpam'=> '$refresh',
+        'status-was-updated' => '$refresh',
+        'idea-was-updated' => '$refresh',
+        'idea-was-marked-as-spam'=> '$refresh',
+        'idea-was-marked-as-not-spam'=> '$refresh',
         ];
 
     public function mount(Idea $idea, $votesCount, $hasVoted){

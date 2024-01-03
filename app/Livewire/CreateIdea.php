@@ -40,7 +40,7 @@ class CreateIdea extends Component
 
         $idea->toggleVote(auth()->user());
 
-        session()->flash('success_message','Idea was added successfully.');
+        session()->flash('success','Idea was added successfully.');
         $this->reset();
 
         return redirect()->route('idea.index');      

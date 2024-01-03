@@ -4,11 +4,7 @@
     x-show = "isOpen"
     @keydown.escape.window="isOpen = false"
     @open-edit-idea-modal.window="isOpen = true"
-    x-init="
-        $wire.on('ideaWasUpdated', () => {
-            isOpen = false
-        })
-    "
+    x-on:idea-was-updated.window="isOpen = false"
     class="relative z-10" 
     aria-labelledby="modal-title" 
     role="dialog" 
@@ -118,21 +114,6 @@
                                 <span class="ml-1"> Update</span>
                             </button>
                         </div>
-                        <!-- Success Message -->
-                        @if (session('success_message'))
-                            <div 
-                                x-data="{ isVisible: true }"
-                                x-init="
-                                    setTimeout(() => {
-                                        isVisible = false
-                                    }, 5000)
-                                "
-                                x-show.transition.duration.1000ms="isVisible"
-                                class="text-green mt-4"        
-                            >
-                                {{  session('success_message')  }}
-                            </div>
-                        @endif
                     </form>
                 </div>
             </div>

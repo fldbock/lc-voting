@@ -138,7 +138,7 @@ class EditIdeaTest extends TestCase
             ->set('category', $categoryTwo->id)
             ->set('description', 'My New Description')
             ->call('updateIdea')
-            ->assertDispatched('ideaWasUpdated');
+            ->assertDispatched('idea-was-updated');
 
         $this->assertDatabaseHas('ideas', [
             'user_id'=> $user->id,

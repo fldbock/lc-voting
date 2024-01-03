@@ -13,11 +13,8 @@
     x-show = "isOpen"
     @keydown.escape.window="isOpen = false"
     {{  '@' . $eventToOpenModal  }}.window="isOpen = true"
-    x-init="
-        $wire.on('{{  $eventToCloseModal  }}', () => {
-            isOpen = false
-        })
-    "
+    x-on:{{  $eventToCloseModal  }} = "isOpen = false
+"
     class="relative z-10" 
     aria-labelledby="modal-title" 
     role="dialog" 

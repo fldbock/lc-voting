@@ -27,6 +27,7 @@ class MarkIdeaAsSpam extends Component
         $this->idea->spam_reports++;
         $this->idea->save();
 
-        $this->dispatch('ideaWasMarkedAsSpam');
+        $this->dispatch('idea-was-marked-as-spam');
+        $this->dispatch('notification-success-open', message:'Idea was succesfully marked as spam!');
     }
 }
