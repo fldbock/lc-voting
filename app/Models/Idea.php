@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Status;
+use App\Models\Comment;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -34,6 +35,10 @@ class Idea extends Model
 
     public function votes(){
         return $this->BelongsToMany(User::class, 'votes');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
     public function sluggable(): array

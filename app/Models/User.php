@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Idea;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -51,6 +52,10 @@ class User extends Authenticatable
 
     public function votes(){
         return $this->BelongsToMany(Idea::class, 'votes');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
     public function getAvatar(){

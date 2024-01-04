@@ -12,6 +12,7 @@ class StatusSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    public const COUNT = 5;
     public function run(): void
     {
         Status::factory()->create(['id' => 1, 'name' => 'Open']);

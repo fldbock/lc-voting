@@ -29,7 +29,9 @@ class IdeaShow extends Component
     
     public function render()
     {
-        return view('livewire.idea-show');
+        return view('livewire.idea-show', [
+            'comment_count' => $this->idea->comments->count(),
+        ]);
     }
 
     public function vote(){

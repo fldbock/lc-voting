@@ -12,6 +12,7 @@ class CategorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    public const COUNT = 4;
     public function run(): void
     {
         Category::factory()->create(['id' => 1, 'name' => 'Category 1']);

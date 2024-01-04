@@ -8,6 +8,10 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Status;
 
+use Database\Seeders\UserSeeder;
+use Database\Seeders\CategorySeeder;
+use Database\Seeders\StatusSeeder;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Idea>
  */
@@ -18,9 +22,8 @@ class IdeaFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $USER_COUNT = 20;
-    protected $CATEGORY_COUNT = 4;
-    protected $STATUS_COUNT = 5;
+
+  
     public function definition(): array
     {
         
@@ -36,9 +39,9 @@ class IdeaFactory extends Factory
     public function existing(){
         return $this->state(function (array $attributes) {
             return [
-                'user_id' => $this->faker->numberBetween(1,$this->USER_COUNT),
-                'category_id' => $this->faker->numberBetween(1,$this->CATEGORY_COUNT),
-                'status_id' => $this->faker->numberBetween(1,$this->STATUS_COUNT),
+                'user_id' => $this->faker->numberBetween(1, UserSeeder::COUNT),
+                'category_id' => $this->faker->numberBetween(1,CategorySeeder::COUNT),
+                'status_id' => $this->faker->numberBetween(1,StatusSeeder::COUNT),
             ];
         });
     }

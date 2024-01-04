@@ -78,7 +78,7 @@
                         &bull;
                     </div>
                     <div class="text-gray-900">                            
-                        3 Comments
+                        {{  $idea->comments_count  }} Comments
                     </div>
                 </div>
                 <!-- status and more button -->

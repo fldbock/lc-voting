@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    public const COUNT = 20;
     public function run(): void
     {
         User::factory()->create([
@@ -26,7 +27,7 @@ class UserSeeder extends Seeder
             'email'=> 'rolf.debock@gmail.com',
         ]);
         
-        for ($i = 3; $i <= 20; $i++) {
+        for ($i = 3; $i <= $this::COUNT; $i++) {
             User::factory()->create([
                 'id'=> $i,
             ]);

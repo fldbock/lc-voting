@@ -14,6 +14,7 @@ use App\Livewire\DeleteIdea;
 use App\Models\User;
 use App\Models\Idea;
 use App\Models\Vote;
+use App\Models\Comment;
 
 class DeleteIdeaTest extends TestCase
 {
@@ -188,6 +189,57 @@ class DeleteIdeaTest extends TestCase
         ]);
 
         $this->assertEquals(Vote::count(), 0);
+    }
+
+    /** @test */
+    public function test_deleting_an_idea_with_comments_works_when_user_has_authorization(){
+        $user = User::factory()->create();
+        $userAdmin = User::factory()->create([
+            'email' => 'flor.debock@gmail.com',
+        ]);
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'title' => 'My Idea',
+        ]); 
+        $ideaTwo = Idea::factory()->create([
+            'user_id' => $user->id,
+            'title' => 'My Second Idea',
+        ]); 
+
+        Comment::factory()->create([
+            'idea_id' => $idea->id,
+        ]);
+
+        Comment::factory()->create([
+            'idea_id' => $ideaTwo->id,
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(DeleteIdea::class, [
+                'idea'=> $idea,
+            ])
+            ->call('deleteIdea')
+            ->assertRedirect(route('idea.index'));
+
+        $this->assertDatabaseMissing('ideas', [
+            'user_id'=> $user->id,
+            'Title' => 'My Idea',
+        ]);
+
+        // Admin
+        Livewire::actingAs($userAdmin)
+        ->test(DeleteIdea::class, [
+            'idea'=> $ideaTwo,
+        ])
+        ->call('deleteIdea')
+        ->assertRedirect(route('idea.index'));
+
+        $this->assertDatabaseMissing('ideas', [
+            'user_id'=> $user->id,
+            'Title' => 'My Idea',
+        ]);
+
+        $this->assertEquals(Comment::count(), 0);
     }
 
     /** @test */

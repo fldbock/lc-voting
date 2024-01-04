@@ -39,7 +39,7 @@
                             &bull;
                         </div>
                         <div class="text-gray-900">                            
-                            3 Comments
+                            {{  $comment_count }} Comments
                         </div>
                     </div>
                     <div class="flex items-center space-x-2 mt-4 md:mt-0">
