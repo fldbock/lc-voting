@@ -5,13 +5,16 @@ namespace App\Livewire;
 use Livewire\Component;
 
 use App\Models\Comment;
+use App\Models\Idea;
 
 class IdeaComment extends Component
 {
     public $comment;
+    public $idea;
 
-    public function mount(Comment $comment){
+    public function mount(Comment $comment, Idea $idea){
         $this->comment = $comment;
+        $this->idea = $idea;
     }
     public function render()
     {

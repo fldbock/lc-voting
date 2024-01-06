@@ -11,7 +11,7 @@
                     A random title can go here
                 </a>
             </h4> -->
-            <div class="text-gray-600 mt-3 line-clamp-3 mt-2 md:mt-0">
+            <div class="text-gray-600 mt-3 md:mt-0">
                 {{  $comment->body  }}
             </div>
             <div class="flex items-center justify-between mt-6">
@@ -22,6 +22,14 @@
                     <div>
                         &bull;
                     </div>
+                    @if($comment->user_id === $idea->user_id)
+                        <div class="rounded-full border bg-gray-100 px-3 py-1">
+                            OP
+                        </div>
+                        <div>
+                            &bull;
+                        </div>
+                    @endif
                     <div>
                         {{  $comment->created_at->diffForHumans()  }}
                     </div>
